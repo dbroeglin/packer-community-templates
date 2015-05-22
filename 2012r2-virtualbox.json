@@ -2,7 +2,7 @@
   "builders": [
     {
       "type": "virtualbox-windows-iso",
-      "vm_name": "vagrant-rsync",
+      "vm_name": "vagrant-lo",
       "iso_url": "http://download.microsoft.com/download/6/2/A/62A76ABB-9990-4EFC-A4FE-C7D698DAEB96/9600.16384.WINBLUE_RTM.130821-1623_X64FRE_SERVER_EVAL_EN-US-IRM_SSS_X64FREE_EN-US_DV5.ISO",
       "iso_checksum_type": "md5",
       "iso_checksum": "458ff91f8abc21b75cb544744bf92e6a",
@@ -46,7 +46,7 @@
     },
     {
       "type": "virtualbox-windows-ovf",
-      "source_path": "./output-virtualbox-windows-iso/vagrant-rsync.ovf",
+      "source_path": "./output-virtualbox-windows-iso/vagrant-lo.ovf",
       "headless": false,
       "guest_additions_mode": "disable",
       "boot_wait": "30s",
@@ -82,14 +82,6 @@
   ],
   "provisioners": [
     {
-      "type":"powershell",
-      "inline": [
-        "(iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1')))>$null 2>&1",
-        "choco install 7zip -y"
-      ],
-      "only":["virtualbox-windows-iso"]
-    },
-    {
       "type": "file",
       "source": "./answer_files/2012_r2/Autounattend_sysprep.xml",
       "destination": "c:/Windows/Temp/Autounattend_sysprep.xml",
@@ -102,20 +94,6 @@
         "./scripts/disable-password-complexity.ps1"
       ],
       "only":["virtualbox-windows-iso"]
-    },
-    {
-      "type": "powershell",
-      "scripts": [
-        "./scripts/openssh.ps1"
-      ],
-      "only":["virtualbox-windows-ovf"]
-    },
-    {
-      "type":"windows-shell",
-      "scripts": [
-        "./scripts/rsync.bat"
-      ],
-      "only":["virtualbox-windows-ovf"]
     },
     {
       "type": "powershell",
@@ -149,7 +127,7 @@
     {
       "type": "vagrant",
       "keep_input_artifact": true,
-      "output": "windows2012r2-{{.Provider}}.box",
+      "output": "windows2012r2-{{.Provider}}-lo.box",
       "vagrantfile_template": "vagrantfile-windows_2012_r2.template",
 	    "only":["virtualbox-windows-ovf"]
     }

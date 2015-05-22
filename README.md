@@ -1,5 +1,7 @@
 # Packer Community Example Templates
 
+*This version is simplified and customized for my needs.(fr-CH, less packages, etc.)*
+
 [Packer Community](https://github.com/packer-community/packer-windows-plugins/) Templates for Windows environments to test/showcase many of the Windows-specific Builders and Provisioners.
 
 ## Running 
